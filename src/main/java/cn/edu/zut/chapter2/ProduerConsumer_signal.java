@@ -3,9 +3,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.annotation.PreDestroy;
 
-public class ProduerConsumer_1 {
+public class ProduerConsumer_signal {
     public static Semaphore mutex=new Semaphore(1);
     public static Semaphore empty=new Semaphore(2);
     public static Semaphore full=new Semaphore(0);
@@ -14,7 +13,7 @@ public class ProduerConsumer_1 {
     // int num=1;
     static AtomicInteger count=new AtomicInteger(0);
     public static void main(String[] args) throws Exception{
-        ProduerConsumer_1 pc=new ProduerConsumer_1();
+        ProduerConsumer_signal pc=new ProduerConsumer_signal();
         ArrayList<Thread> allThreads=new ArrayList<Thread>();
         for(int i=0;i<10;i++){
             Thread p=pc.new Producer();
@@ -28,10 +27,6 @@ public class ProduerConsumer_1 {
             t.join();
         }
         System.out.println(pc.items.size());
-    }
-    @PreDestroy
-    public void output(){
-        System.out.println(123);
     }
     class Producer extends Thread {
         public void run(){
